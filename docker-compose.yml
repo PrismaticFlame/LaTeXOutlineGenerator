@@ -1,0 +1,15 @@
+services:
+  pdf-outliner:
+    build: .
+    container_name: pdf-outliner
+    volumes:
+      # Mount local directories so you can easily add PDFs and get outlines
+      - ./input:/app/input
+      - ./output:/app/output
+      - ./examples:app/examples
+    environment:
+      - OLLAMA_MODEL=llama3.2:3b
+    # Override command to process a specific file
+    # Usage: docker-copose run pdf-outliner input/your-file.pdf
+    stdin_open: true
+    tty: true

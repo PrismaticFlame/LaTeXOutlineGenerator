@@ -1,0 +1,2 @@
+pymupdf4llm>=0.0.5
+ollama>=0.1.0
