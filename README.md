@@ -4,11 +4,11 @@ Generate LaTeX outlines from PDF documents using local AI models. No API keys re
 
 ## Features
 
-- 🤖 Runs completely locally using Ollama
-- 📄 Extracts text from PDFs intelligently
-- 📝 Generates LaTeX outlines based on your examples
-- 🐳 Available as both Python script and Docker container
-- 🔒 Private - your documents never leave your machine
+- Runs completely locally using Ollama
+- Extracts text from PDFs intelligently
+- Generates LaTeX outlines based on your examples
+- Available as both Python script and Docker container
+- Private - your documents never leave your machine
 
 ## Quick Start (Python - Recommended)
 
