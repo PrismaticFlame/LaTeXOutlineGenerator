@@ -28,7 +28,7 @@ Generate LaTeX outlines from PDF documents using local AI models. No API keys re
 
 ```bash
 # Clone or download this repository
-git clone <your-repo-url>
+git clone https://github.com/PrismaticFlame/LaTeXOutlineGenerator
 cd pdf-outliner
 
 # Install Python dependencies
