@@ -2,13 +2,22 @@ services:
   pdf-outliner:
     build: .
     container_name: pdf-outliner
+    # enable GPU access
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     volumes:
       # Mount local directories so you can easily add PDFs and get outlines
       - ./input:/app/input
       - ./output:/app/output
-      - ./examples:app/examples
+      - ./examples:/app/examples
     environment:
       - OLLAMA_MODEL=llama3.2:3b
+      - NVIDIA_VISIBLE_DEVICES=all
     # Override command to process a specific file
     # Usage: docker-copose run pdf-outliner input/your-file.pdf
     stdin_open: true

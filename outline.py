@@ -9,7 +9,13 @@ import sys
 import argparse
 from pathlib import Path
 import pymupdf4llm
-import ollama
+
+try:
+    import ollama
+except:
+    print("Error: ollama package not installed")
+    print("Install it with: pip install ollama")
+    sys.exit(1)
 
 def load_examples(examples_dir: Path) -> str:
     """
@@ -99,8 +105,12 @@ def generate_outline(pdf_text: str, examples: str, model: str = "llama3.2:3b") -
     prompt = f"""{examples}
 
     Now, based on the examples above, create a LaTeX outline for the following NEW document.
-    Follow the same style and structure patterns you observed in the examples.
-    Only output the LaTeX code, nothing else.
+    Follow the EXACT style you see in the examples:
+    - ONLY use \\section{{}} and \\subsection{{}} commands
+    - DO NOT include any code blocks, figures, tables, or content
+    - DO NOT include \\begin{{verbatim}}, \\begin{{figure}}, or \\begin{{table}}
+    - Match the document structure and preamble style from the examples
+    - An outline is just the hierarchical structure of sections, nothing more
 
     New Document Content:
     {pdf_text_preview}
@@ -108,12 +118,20 @@ def generate_outline(pdf_text: str, examples: str, model: str = "llama3.2:3b") -
     Generate the LaTeX outline:"""
 
     try:
+        print(f"    Calling ollama.chat with model={model}...")
         response = ollama.chat(
-            model=model,
-            message=[
+            model,
+            messages=[
                 {
                     'role': 'system',
-                    'content': 'You are a helpful assistant the creates well-structured LaTeX document outlines. You only output valid LaTeX code with no explanations or markdown formatting.'
+                    'content': '''You are a helpful assistant the creates well-structured LaTeX document outlines. You only output valid LaTeX code with no explanations or markdown formatting.
+                    An outline contains ONLY the document structure: sections and subsections with titles.
+                    DO NOT include:
+                    - Code blocks or verbatim text
+                    - Figures, tables, or captions
+                    - Actual content or explanations
+                    - Any text besides section/subsection commands
+                    Only output valid LaTeX outline code with \section{} and \subsection{} commands.'''
                 },
                 {
                     'role': 'user',

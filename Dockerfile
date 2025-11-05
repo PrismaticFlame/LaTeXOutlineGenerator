@@ -1,4 +1,4 @@
-FROM python:3.15-rc-slim
+FROM python:3.11-slim
 
 RUN apt-get update && apt-get install -y \
     curl \
@@ -24,7 +24,7 @@ RUN mkdir -p input output
 # RUN ollama serve & sleep 5 && ollama pull llama3.2:3b && pkill ollama
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entryopint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
